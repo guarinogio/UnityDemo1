@@ -1,0 +1,13 @@
+Source/Library/
+Source/LibraryIOS/
+Source/LibraryAndroid/
+Source/Temp/
+Source/Assets/UnityVS/
+Source/.vs/config/
+Source/Assets/UnityVS.meta
+*.csproj
+*.pidb
+*.unityproj
+*.sln
+*.suo
+*.userprefs
