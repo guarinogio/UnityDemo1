@@ -2,9 +2,10 @@
 using Constants;
 using System.Collections;
 
-public class EnemyData : MonoBehaviour
+public class UserData : MonoBehaviour
 {
     [Header("States"), Space(10)]
+    [Space(10)]
     #region States
     public MOVESTATE moveState;
     public BATTLESTATE battleState;
@@ -21,6 +22,9 @@ public class EnemyData : MonoBehaviour
     public float armor;
     public float attackSpeed;  // Delta betwen animator attacks
     public float damage;
+    public float jumpForce;
+    public float maxSpeed;
+    public float moveForce;
     #endregion Stats
 
     // Use this for initialization

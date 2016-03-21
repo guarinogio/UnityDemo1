@@ -1,25 +1,27 @@
 ﻿namespace Constants
     {
-    public enum GENRE
+    public enum BATTLESTATE
     {
-        MALE,
-        FEMALE
+        IDLE,
+        ATTACK,
+        BLOCK,
+        PARRY,
+        EVADE
     }
 
-    public enum ANATOMY
+    public enum MOVESTATE
     {
-        BIPED,
-        QUADRUPED
+        IDLE,
+        FORWARD,
+        BACK,
+        STOP,
+        JUMP,
+        STOOP,
+        DIE
+
     }
 
-    public enum ATTACKTYPE
-    {
-        RANGE,
-        MELEE,
-        KAMEKAZE
-    }
-
-    public enum THEME
+    public enum TYPE
     {
         FIRE,
         ICE,
@@ -49,17 +51,5 @@
         MINION,
         SUMMONED
     }
-
-    public enum GAMEPLAYRESULT
-    {
-        NONE,
-        TIME,
-        WON,
-        LOSE,
-        SURRENDER,
-        DRAW
-
-    }
-
 }
 
