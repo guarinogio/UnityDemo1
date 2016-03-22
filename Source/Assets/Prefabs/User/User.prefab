@@ -142,7 +142,6 @@ GameObject:
   - 222: {fileID: 22210992}
   - 114: {fileID: 11490500}
   - 61: {fileID: 6165906}
-  - 58: {fileID: 5886018}
   - 50: {fileID: 5063644}
   m_Layer: 5
   m_Name: User
@@ -325,26 +324,13 @@ Rigidbody2D:
   m_GameObject: {fileID: 143408}
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: .0500000007
+  m_AngularDrag: 0
   m_GravityScale: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!58 &5886018
-CircleCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 143408}
-  m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: .5
+  m_Constraints: 4
 --- !u!61 &6113026
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -352,12 +338,12 @@ BoxCollider2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 191406}
   m_Enabled: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 5c95133aa0580014d95716db03c8a309, type: 2}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 50, y: 5.4000001}
+  m_Size: {x: 50, y: 12.3999996}
 --- !u!61 &6165906
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -365,12 +351,12 @@ BoxCollider2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 143408}
   m_Enabled: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 5c95133aa0580014d95716db03c8a309, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 50, y: 100}
+  m_Size: {x: 50, y: 68.0999985}
 --- !u!114 &11400884
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -644,13 +630,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 558144c5664fa764c882e35e77582f27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPressed: 0
-  isMoving: 0
-  isJumping: 0
-  isAttacking: 0
-  isSuperMoving: 0
-  isBlocking: 0
-  isParrying: 0
+  isAnyPressed: 0
+  HorizontalAxisPressed: 0
+  VerticalAxisPressed: 0
+  XPressed: 0
+  R1Pressed: 0
+  R2Pressed: 0
+  L1Pressed: 0
+  L2Pressed: 0
+  canXAgain: 1
+  canR1Again: 1
+  canR2Again: 1
+  waitToPressX: .300000012
   attack: 0
   superMove: 0
   block: 0
@@ -767,6 +758,8 @@ MonoBehaviour:
   battleState: 0
   HP: 0
   AP: 0
+  isJumping: 0
+  isMoving: 0
   detectionRange: 0
   maxHP: 0
   maxAP: 0
@@ -776,7 +769,7 @@ MonoBehaviour:
   damage: 0
   jumpForce: 350
   maxSpeed: 0
-  moveForce: 0
+  moveSpeed: 6
 --- !u!114 &11490500
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -922,7 +915,7 @@ RectTransform:
   m_RootOrder: 2
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: -4.57167698e-06, y: 22.8999958}
+  m_AnchoredPosition: {x: -4.57167698e-06, y: 6}
   m_SizeDelta: {x: 50, y: 20}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22410004
@@ -958,7 +951,7 @@ RectTransform:
   m_RootOrder: 4
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: -4.76839978e-06, y: -2.2649765e-06}
+  m_AnchoredPosition: {x: -4.76839978e-06, y: -5.30000019}
   m_SizeDelta: {x: 50, y: 100}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22430442
@@ -977,7 +970,7 @@ RectTransform:
   m_RootOrder: 3
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: 1.90734863e-06, y: 1.43051147e-06}
+  m_AnchoredPosition: {x: 1.90734863e-06, y: -5.30000019}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22431472
@@ -1173,7 +1166,7 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: 2.86102295e-06, y: 33.2999954}
+  m_AnchoredPosition: {x: 2.86102295e-06, y: 16.3999996}
   m_SizeDelta: {x: 50, y: 20}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22473004
@@ -1190,7 +1183,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: 2.08616257e-06, y: 44.114994}
+  m_AnchoredPosition: {x: 2.08616257e-06, y: 27.2999992}
   m_SizeDelta: {x: 27.1000004, y: 14.5}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22476680
@@ -1224,8 +1217,8 @@ RectTransform:
   m_RootOrder: 2
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: 7.26405233e-07, y: -47.2999878}
-  m_SizeDelta: {x: 50, y: 5.4000001}
+  m_AnchoredPosition: {x: -3.57627869e-07, y: -34.7999992}
+  m_SizeDelta: {x: 50, y: 12.3999996}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22483784
 RectTransform:
@@ -1244,8 +1237,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: -98, y: -88.4000015}
-  m_SizeDelta: {x: 50, y: 100}
+  m_AnchoredPosition: {x: -98, y: -104.400002}
+  m_SizeDelta: {x: 50, y: 68.0999985}
   m_Pivot: {x: .5, y: .5}
 --- !u!1001 &100100000
 Prefab:

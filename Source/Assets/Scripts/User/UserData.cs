@@ -5,13 +5,17 @@ using System.Collections;
 public class UserData : MonoBehaviour
 {
     [Header("States"), Space(10)]
-    [Space(10)]
     #region States
     public MOVESTATE moveState;
     public BATTLESTATE battleState;
     public float HP;
     public float AP;
     #endregion States
+
+    [Header("MoveStates"), Space(10)]
+    public bool isJumping;
+    public bool isMoving;
+
 
     [Header("Stats"), Space(10)]
     #region Stats
@@ -24,7 +28,7 @@ public class UserData : MonoBehaviour
     public float damage;
     public float jumpForce;
     public float maxSpeed;
-    public float moveForce;
+    public float moveSpeed;
     #endregion Stats
 
     // Use this for initialization

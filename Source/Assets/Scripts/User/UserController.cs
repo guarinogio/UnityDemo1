@@ -24,8 +24,13 @@ public class UserController : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
 
+
+	void FixedUpdate () {
+        if (!controller.HorizontalAxisPressed)
+        {
+            view.rigid.velocity = new Vector2(0, view.rigid.velocity.y);
+        }
     }
 
     void ActivateInput (bool activate){
@@ -35,7 +40,7 @@ public class UserController : MonoBehaviour {
             controller.PressDOWN += PressDOWN;
             controller.PressLEFT += PressLEFT;
             controller.PressRIGHT += PressRIGHT;
-            controller.PressJUMP += PressJUMP;
+            controller.PressX += PressJUMP;
         }
         else
         {
@@ -43,7 +48,7 @@ public class UserController : MonoBehaviour {
             controller.PressDOWN -= PressDOWN;
             controller.PressLEFT -= PressLEFT;
             controller.PressRIGHT -= PressRIGHT;
-            controller.PressJUMP -= PressJUMP;
+            controller.PressX -= PressJUMP;
         }
     }
 
@@ -65,7 +70,7 @@ public class UserController : MonoBehaviour {
     {
         if (arg1.gameObject.tag == "floor")
         {
-            controller.isJumping = true;
+            data.isJumping = true;
         }
     }
 
@@ -73,7 +78,7 @@ public class UserController : MonoBehaviour {
     {
         if (arg1.gameObject.tag == "floor")
         {
-            controller.isJumping = false;
+            data.isJumping = false;
         }
     }
 
@@ -88,20 +93,19 @@ public class UserController : MonoBehaviour {
 
     void PressLEFT()
     {
-
+        view.rigid.velocity = new Vector2(-1* data.moveSpeed, view.rigid.velocity.y);
     }
 
     void PressRIGHT()
     {
-
+        view.rigid.velocity = new Vector2(data.moveSpeed, view.rigid.velocity.y);
     }
 
     void PressJUMP()
     {
-        if (!controller.isJumping)
+        if (!data.isJumping)
         {
-            controller.isJumping = true;
-            Debug.Log("Hola");
+            data.isJumping = true;
             view.rigid.AddForce(new Vector2(0f, data.jumpForce));
         }
     }
