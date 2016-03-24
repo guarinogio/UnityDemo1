@@ -14,8 +14,9 @@ public class UserData : MonoBehaviour
 
     [Header("MoveStates"), Space(10)]
     public bool isJumping;
+    public bool isRuning;
     public bool isMoving;
-
+    public bool isEvading;
 
     [Header("Stats"), Space(10)]
     #region Stats
@@ -27,6 +28,10 @@ public class UserData : MonoBehaviour
     public float attackSpeed;  // Delta betwen animator attacks
     public float damage;
     public float jumpForce;
+    public float evadeSpeed;
+    public float evadeTime;
+    public float aceleration;
+    public float friction;
     public float maxSpeed;
     public float moveSpeed;
     #endregion Stats

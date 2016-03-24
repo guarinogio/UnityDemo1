@@ -8,25 +8,38 @@ public class ControllerBeahaviour : MonoBehaviour {
     public bool isAnyPressed = false;
     public bool HorizontalAxisPressed = false;
     public bool VerticalAxisPressed = false;
-    public bool XPressed = false;
+    public bool leftPressed = false;
+    public bool rightPressed = false;
+    public bool APressed = false;
+    public bool BPressed = false;
     public bool R1Pressed = false;
     public bool R2Pressed = false;
     public bool L1Pressed = false;
     public bool L2Pressed = false;
 
-
-    [Header("ControlButtom"), Space(10)]
-    public bool canXAgain = true;
-    public bool canR1Again = true;
-    public bool canR2Again = true;
-
-    [Header("ControlButtom"), Space(10)]
-    public float waitToPressX = 0.1f;
-
     [HideInInspector]
-    public KeyCode X {
+    public KeyCode A {
         get { return KeyCode.Joystick1Button0; }
     }
+
+    [HideInInspector]
+    public KeyCode B
+    {
+        get { return KeyCode.Joystick1Button1; }
+    }
+    [HideInInspector]
+    public KeyCode L1
+    {
+        get { return KeyCode.Joystick1Button4; }
+    }
+
+    [HideInInspector]
+    public KeyCode R1
+    {
+        get { return KeyCode.Joystick1Button5; }
+    }
+
+
 
     [HideInInspector]
     public KeyCode attack;
@@ -46,7 +59,9 @@ public class ControllerBeahaviour : MonoBehaviour {
     [HideInInspector]
     public Callback PressRIGHT;
     [HideInInspector]
-    public Callback PressX;
+    public Callback PressA;
+    [HideInInspector]
+    public Callback<bool> PressB;
     [HideInInspector]
     public Callback PressR1;
     [HideInInspector]
@@ -55,6 +70,7 @@ public class ControllerBeahaviour : MonoBehaviour {
     public Callback PressL1;
     [HideInInspector]
     public Callback PressL2;
+
 
     // Use this for initialization
     void Start () {
@@ -98,36 +114,54 @@ public class ControllerBeahaviour : MonoBehaviour {
             }
         }
 
-        if (Input.GetKeyDown(X) && canXAgain)
+        if (Input.GetKeyDown(A))
         {
-            if (PressX != null)
+            if (PressA != null)
             {
-                PressX();
-                //StartCoroutine(SetX());
-                StartCoroutine(WaitToXAgain(waitToPressX));
+                PressA();
             }
         }
+
+        if (Input.GetKeyDown(L1))
+        {
+            if (PressL1 != null)
+            {
+                PressL1();
+            }
+        }
+
+        if (Input.GetKeyDown(R1))
+        {
+            if (PressR1 != null)
+            {
+                PressR1();
+            }
+        }
+
+        if (Input.GetKey(B))
+        {
+            if (PressB != null)
+            {
+                PressB(true);
+            }
+        }
+
+        if (Input.GetKeyUp(B))
+        {
+            PressB(false);
+        }
+
 
         isAnyPressed = (Input.anyKey || Input.anyKeyDown);
         HorizontalAxisPressed = Input.GetAxis("Horizontal") != 0;
         VerticalAxisPressed = Input.GetAxis("Vertical") != 0;
-        XPressed = Input.GetKeyDown(X);
+        leftPressed = Input.GetAxisRaw("Horizontal") < 0;
+        rightPressed = Input.GetAxisRaw("Horizontal") > 0;
+        APressed = Input.GetKey(A);
+        BPressed = Input.GetKey(B);
         R1Pressed = false;
         R2Pressed = false;
         L1Pressed = false;
         L2Pressed = false;
-    }
-
-    private IEnumerator WaitToXAgain(float v)
-    {
-        canXAgain = false;
-        yield return new WaitForSeconds(v);
-        canXAgain = true;
-    }
-
-    IEnumerator SetX()
-    {
-        PressX();
-        yield return null;
     }
 }

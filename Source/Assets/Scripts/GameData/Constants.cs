@@ -14,11 +14,17 @@
         IDLE,
         FORWARD,
         BACK,
-        STOP,
+        RUN,
         JUMP,
         STOOP,
         DIE
 
+    }
+
+    public enum DIRECTION
+    {
+        LEFT,
+        RIGHT
     }
 
     public enum TYPE
