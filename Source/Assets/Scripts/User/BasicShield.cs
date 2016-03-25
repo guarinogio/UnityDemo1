@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-public class BasicSword : ItemElement
+public class BasicShield : ItemElement
 {
 
     public bool isDisable;
@@ -40,22 +40,19 @@ public class BasicSword : ItemElement
 
     private void TriggerEnter(Collider2D arg1)
     {
-        Debug.Log("Ataco");
+        Debug.Log("Bloqueo");
     }
 
     public override void Do(bool flag)
     {
-        if (gameObject.activeSelf == false)
+        if (flag)
         {
-            StartCoroutine(Attack(1.5f));
+            gameObject.SetActive(true);
         }
-    }
-
-    private IEnumerator Attack(float v)
-    {
-        gameObject.SetActive(true);
-        yield return new WaitForSeconds(v);
-        gameObject.SetActive(false);
+        else
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     public override void Special(bool flag) { }

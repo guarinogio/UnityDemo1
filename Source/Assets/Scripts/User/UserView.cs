@@ -12,11 +12,11 @@ public class UserView : MonoBehaviour {
     public Text attackStateText;
     public Image moveStateImage;
     public Text moveStateText;
-    public GameObject element;
     public Collider2D colider;
     public Collider2D floorColider;
     public Rigidbody2D rigid;
-
+    public GameObject normalState;
+    public GameObject inventory;
     void Awake()
     {
         HP.minValue = 0;

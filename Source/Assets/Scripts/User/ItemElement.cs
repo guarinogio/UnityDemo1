@@ -11,18 +11,18 @@ public abstract class ItemElement : MonoBehaviour
 
     public virtual ItemElement itemElement { get { return this; } set { } }
 
-    public virtual void Do()
+    public virtual void Do(bool flag)
     {
 
     }
   
 
-    public virtual void Special()
+    public virtual void Special(bool flag)
     {
 
     }
 
-    public virtual void Charge()
+    public virtual void Charge(bool flag)
     {
 
     }

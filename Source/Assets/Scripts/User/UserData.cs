@@ -38,6 +38,7 @@ public class UserData : MonoBehaviour
 
     [Header("Inventory"), Space(10)]
     public ItemElement sword;
+    public ItemElement shield;
 
     // Use this for initialization
     void Start()

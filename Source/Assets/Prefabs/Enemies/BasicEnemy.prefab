@@ -289,6 +289,7 @@ GameObject:
   - 222: {fileID: 22239188}
   - 114: {fileID: 11414686}
   - 61: {fileID: 6142512}
+  - 61: {fileID: 6176984}
   - 50: {fileID: 5006644}
   m_Layer: 9
   m_Name: BasicEnemy
@@ -350,6 +351,19 @@ BoxCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: .138641357, y: -.77155304}
+  serializedVersion: 2
+  m_Size: {x: 47.2303925, y: 98.4568405}
+--- !u!61 &6176984
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 194990}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
