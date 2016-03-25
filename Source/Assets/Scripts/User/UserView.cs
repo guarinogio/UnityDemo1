@@ -12,7 +12,7 @@ public class UserView : MonoBehaviour {
     public Text attackStateText;
     public Image moveStateImage;
     public Text moveStateText;
-
+    public GameObject element;
     public Collider2D colider;
     public Collider2D floorColider;
     public Rigidbody2D rigid;
@@ -50,7 +50,7 @@ public class UserView : MonoBehaviour {
                 break;
             case MOVESTATE.RUN:
                 moveStateText.text = "RUN";
-                moveStateImage.color = Color.red;
+                moveStateImage.color = Color.green;
                 break;
             case MOVESTATE.JUMP:
                 break;
@@ -72,8 +72,12 @@ public class UserView : MonoBehaviour {
                 attackStateImage.color = Color.white;
                 break;
             case BATTLESTATE.ATTACK:
+                attackStateText.text = "ATTK";
+                attackStateImage.color = Color.red;
                 break;
             case BATTLESTATE.BLOCK:
+                attackStateText.text = "BLOCK";
+                attackStateImage.color = Color.black;
                 break;
             case BATTLESTATE.PARRY:
                 break;

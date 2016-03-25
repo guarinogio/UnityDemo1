@@ -17,6 +17,9 @@ public class UserController : MonoBehaviour {
     [SerializeField]
     private SensorController floorSensor;
 
+    [SerializeField]
+    private SensorController colliderSensor;
+
     private bool canJumpAgain = true;
     private DIRECTION lastDirection;
 
@@ -38,8 +41,6 @@ public class UserController : MonoBehaviour {
             view.MoveState(MOVESTATE.IDLE);
             view.rigid.velocity = new Vector2(0, view.rigid.velocity.y);
         }
-
-        Debug.Log(view.rigid.velocity.x);
     }
 
     void ActivateInput (bool activate){
@@ -52,6 +53,8 @@ public class UserController : MonoBehaviour {
             //controller.PressA += PressJUMP;
             controller.PressA += PressEVADE;
             controller.PressB += PressRUN;
+            controller.PressR1 += PressAttack;
+            controller.PressL1 += PressBlock;
         }
         else
         {
@@ -62,6 +65,8 @@ public class UserController : MonoBehaviour {
             //controller.PressA -= PressJUMP;
             controller.PressA -= PressEVADE;
             controller.PressB -= PressRUN;
+            controller.PressR1 -= PressAttack;
+            controller.PressL1 += PressBlock;
         }
     }
 
@@ -69,17 +74,30 @@ public class UserController : MonoBehaviour {
     {
         if (activate)
         {
-            floorSensor.TriggerStay += TriggerStay;
-            floorSensor.TriggerExit += TriggerExit;
+            floorSensor.TriggerStay += FloorTriggerStay;
+            floorSensor.TriggerExit += FloorTriggerExit;
+            colliderSensor.CollisionEnter += CollisionEnter;
         }
         else
         {
-            floorSensor.TriggerStay -= TriggerStay;
-            floorSensor.TriggerExit -= TriggerExit;
+            floorSensor.TriggerStay -= FloorTriggerStay;
+            floorSensor.TriggerExit -= FloorTriggerExit;
+            colliderSensor.CollisionEnter += CollisionEnter;
         }
     }
 
-    private void TriggerExit(Collider2D arg1)
+    private void CollisionEnter(Collision2D arg1)
+    {
+        if (arg1.gameObject.layer == 9)
+        {
+            if (!data.isEvading)
+            {
+                StartCoroutine(Repel(data.evadeTime));
+            }
+        }
+    }
+
+    private void FloorTriggerExit(Collider2D arg1)
     {
         if (arg1.gameObject.tag == "floor")
         {
@@ -87,7 +105,7 @@ public class UserController : MonoBehaviour {
         }
     }
 
-    private void TriggerStay(Collider2D arg1)
+    private void FloorTriggerStay(Collider2D arg1)
     {
         if (arg1.gameObject.tag == "floor")
         {
@@ -134,6 +152,7 @@ public class UserController : MonoBehaviour {
 
     void PressRIGHT()
     {
+        //view.element.transform.Rotate(new Vector3(0,180));
         lastDirection = DIRECTION.RIGHT;
         if (!data.isEvading)
         {
@@ -188,6 +207,24 @@ public class UserController : MonoBehaviour {
         }
     }
 
+    void PressAttack()
+    {
+        data.sword.Do();
+        view.BattleState(BATTLESTATE.ATTACK);
+    }
+
+    void PressBlock(bool isPressed)
+    {
+        if (isPressed)
+        {
+            view.BattleState(BATTLESTATE.BLOCK);
+        }
+        else
+        {
+            view.BattleState(BATTLESTATE.IDLE);
+        }
+    }
+
 
     private IEnumerator WaitToJumpAgain(float v)
     {
@@ -196,8 +233,32 @@ public class UserController : MonoBehaviour {
         canJumpAgain = true;
     }
 
+    private IEnumerator Repel(float v)
+    {
+        if (lastDirection == DIRECTION.RIGHT)
+        {
+            //view.rigid.velocity = new Vector2(data.evadeSpeed * -1, view.rigid.velocity.y);
+            controller.PressLEFT -= PressLEFT;
+            controller.PressRIGHT -= PressRIGHT;
+            view.rigid.AddForce(new Vector2(-350f, 0));
+        }
+        else
+        {
+            //view.rigid.velocity = new Vector2(data.evadeSpeed, view.rigid.velocity.y);
+            controller.PressLEFT -= PressLEFT;
+            controller.PressRIGHT -= PressRIGHT;
+            view.rigid.AddForce(new Vector2(350f, 0));
+        }
+
+        yield return new WaitForSeconds(v);
+        controller.PressLEFT += PressLEFT;
+        controller.PressRIGHT += PressRIGHT;
+        //view.rigid.velocity = new Vector2(0, view.rigid.velocity.y);
+    }
+
     private IEnumerator DoEvade(float v)
     {
+        Physics2D.IgnoreLayerCollision(8, 9, true);
         data.isEvading = true;
         view.BattleState(BATTLESTATE.EVADE);
         if (lastDirection == DIRECTION.RIGHT)
@@ -227,5 +288,6 @@ public class UserController : MonoBehaviour {
         data.isEvading = false;
         view.BattleState(BATTLESTATE.IDLE);
         view.rigid.velocity = new Vector2(0, view.rigid.velocity.y);
+        Physics2D.IgnoreLayerCollision(8, 9, false);
     }
 }

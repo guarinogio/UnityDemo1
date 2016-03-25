@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Constants;
 
 public class SensorController : MonoBehaviour {
 

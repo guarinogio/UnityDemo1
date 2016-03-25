@@ -57,5 +57,11 @@
         MINION,
         SUMMONED
     }
+
+    public enum INPUT
+    {
+        PC,
+        WINCONTROL,
+    }
 }
 

@@ -36,6 +36,9 @@ public class UserData : MonoBehaviour
     public float moveSpeed;
     #endregion Stats
 
+    [Header("Inventory"), Space(10)]
+    public ItemElement sword;
+
     // Use this for initialization
     void Start()
     {

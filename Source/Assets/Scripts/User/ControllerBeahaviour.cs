@@ -1,8 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using Constants;
 
 public class ControllerBeahaviour : MonoBehaviour {
+
+    [Header("Input"), Space(10)]
+    public INPUT input = INPUT.PC;
 
     [Header("Control"), Space(10)]
     public bool isAnyPressed = false;
@@ -19,24 +23,33 @@ public class ControllerBeahaviour : MonoBehaviour {
 
     [HideInInspector]
     public KeyCode A {
-        get { return KeyCode.Joystick1Button0; }
+        get {
+            if(input == INPUT.PC) return KeyCode.Space;
+            return KeyCode.Joystick1Button0; }
     }
 
     [HideInInspector]
     public KeyCode B
     {
-        get { return KeyCode.Joystick1Button1; }
+        get
+        {
+            if (input == INPUT.PC) return KeyCode.LeftShift;
+            return KeyCode.Joystick1Button1; }
     }
     [HideInInspector]
     public KeyCode L1
     {
-        get { return KeyCode.Joystick1Button4; }
+        get {
+            if (input == INPUT.PC) return KeyCode.Mouse1;
+            return KeyCode.Joystick1Button4; }
     }
 
     [HideInInspector]
     public KeyCode R1
     {
-        get { return KeyCode.Joystick1Button5; }
+        get {
+            if (input == INPUT.PC) return KeyCode.Mouse0;
+            return KeyCode.Joystick1Button5; }
     }
 
 
@@ -67,7 +80,7 @@ public class ControllerBeahaviour : MonoBehaviour {
     [HideInInspector]
     public Callback PressR2;
     [HideInInspector]
-    public Callback PressL1;
+    public Callback<bool> PressL1;
     [HideInInspector]
     public Callback PressL2;
 
@@ -122,6 +135,7 @@ public class ControllerBeahaviour : MonoBehaviour {
             }
         }
 
+        /*
         if (Input.GetKeyDown(L1))
         {
             if (PressL1 != null)
@@ -129,12 +143,30 @@ public class ControllerBeahaviour : MonoBehaviour {
                 PressL1();
             }
         }
+        */
 
         if (Input.GetKeyDown(R1))
         {
             if (PressR1 != null)
             {
                 PressR1();
+            }
+        }
+        
+
+        if (Input.GetKey(L1))
+        {
+            if (PressL1 != null)
+            {
+                PressL1(true);
+            }
+        }
+
+        if (Input.GetKeyUp(L1))
+        {
+            if (PressL1 != null)
+            {
+                PressL1(false);
             }
         }
 
@@ -148,7 +180,10 @@ public class ControllerBeahaviour : MonoBehaviour {
 
         if (Input.GetKeyUp(B))
         {
-            PressB(false);
+            if (PressB != null)
+            {
+                PressB(false);
+            }
         }
 
 
@@ -159,9 +194,9 @@ public class ControllerBeahaviour : MonoBehaviour {
         rightPressed = Input.GetAxisRaw("Horizontal") > 0;
         APressed = Input.GetKey(A);
         BPressed = Input.GetKey(B);
-        R1Pressed = false;
+        R1Pressed = Input.GetKey(R1);
         R2Pressed = false;
-        L1Pressed = false;
+        L1Pressed = Input.GetKey(L1);
         L2Pressed = false;
     }
 }
